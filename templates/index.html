@@ -239,7 +239,7 @@
             }
 
             .chat-messages {
-                max-height: calc(100vh - 200px);
+                max-height: calc(98vh - 180px);
                 overflow-y: auto;
             }
 
@@ -248,19 +248,22 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                padding: 16px env(safe-area-inset-right) 24px env(safe-area-inset-left); /* Increased bottom padding */
+                padding: 25px env(safe-area-inset-right) 24px env(safe-area-inset-left); /* Increased bottom padding */
                 background: var(--bg-primary);
                 z-index: 100;
                 gap: 10px;
             }
 
             #question {
+                width: 100%;
                 padding: 20px; /* Increased input padding */
-                font-size: 20px; /* Prevent auto-zoom on focus */
+                font-size: 17px; /* Prevent auto-zoom on focus */
             }
 
             .holographic-btn {
-                padding: 16px 20px; /* Slightly more padding */
+                width: 20%;
+                padding: 16px 20px;
+                 /* Slightly more padding */
             }
         }
     </style>
