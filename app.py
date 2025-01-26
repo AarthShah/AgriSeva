@@ -15,7 +15,11 @@ subscription_key = "69h1lSNG0RNUp48aHD5u4aSJp1Z47IESya7oDsk9z3WggyQ6HPMEJQQJ99BA
 # Route to serve the HTML file
 @app.route('/')
 def index():
-    return render_template('index.html','Feedback.html')  # Serve the HTML file from the 'templates' folder
+    return render_template('index.html') 
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
 
 @app.route('/ask-bot', methods=['POST'])
 def ask_bot():
