@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_cors import CORS
 import requests
 
@@ -11,6 +11,11 @@ CORS(app)
 # Azure service configuration
 azure_endpoint = "https://chatbotruby.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=Ruby&api-version=2021-10-01&deploymentName=production"
 subscription_key = "69h1lSNG0RNUp48aHD5u4aSJp1Z47IESya7oDsk9z3WggyQ6HPMEJQQJ99BAACHYHv6XJ3w3AAAaACOGkXLC"
+
+# Route to serve the HTML file
+@app.route('/')
+def index():
+    return render_template('index.html')  # Serve the HTML file from the 'templates' folder
 
 @app.route('/ask-bot', methods=['POST'])
 def ask_bot():
