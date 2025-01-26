@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AgriSeva</title>
     <style>
         :root {
@@ -37,7 +37,7 @@
         .chat-container {
             width: 100%;
             max-width: 1200px;
-            height: 100vh;
+            height: 90vh;
             background: var(--bg-secondary);
             border-radius: 24px;
             box-shadow: 0 30px 60px var(--shadow-color);
@@ -47,11 +47,6 @@
             flex-direction: column;
             transform-style: preserve-3d;
             transition: transform 0.5s;
-            overflow-y: auto;
-        }
-
-        .chat-container:hover {
-            transform: rotateX(2deg) rotateY(-2deg) scale(1.01);
         }
 
         .chat-header {
@@ -108,7 +103,6 @@
             background: linear-gradient(to bottom, var(--bg-secondary), #1e293b);
             scrollbar-width: thin;
             scrollbar-color: var(--accent-primary) transparent;
-            height: calc(100vh - 120px);
         }
 
         .input-area {
@@ -118,18 +112,10 @@
             border-top: 1px solid var(--border-color);
             box-shadow: 0 -10px 30px var(--shadow-color);
             gap: 10px;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
-        @media (max-width: 768px) {
-    .chat-container {
-        height: calc(100vh - 60px); /* Adjust for mobile keyboard */
-        padding-bottom: 5%;
-    }
-
-    .chat-messages {
-        height: calc(100vh - 140px); 
-        padding-bottom: 10%;/* Adjust for mobile keyboard and input area */
-    }
-}
 
         #question {
             flex-grow: 1;
@@ -189,67 +175,100 @@
             box-shadow: 3px 3px 10px var(--shadow-color);
         }
 
-        @media (max-width: 768px) {
-            .chat-container {
-                height: auto;
-                max-width: 100%;
-                border-radius: 16px;
-            }
+        #welcomeFullScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0a1128 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
 
-            .chat-header h1 {
-                font-size: 1.2em;
-            }
+        #welcomeFullScreen.hidden {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
 
-            .chat-header .logo {
-                font-size: 0.9em;
-            }
+        .welcome-content {
+            text-align: center;
+            color: var(--text-primary);
+            max-width: 80%;
+        }
 
-            #question {
-                font-size: 0.9em;
-                padding: 10px;
-            }
+        .welcome-title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: var(--accent-primary);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
 
-            .holographic-btn {
-                font-size: 0.9em;
-                padding: 10px 15px;
-            }
+        .welcome-subtitle {
+            font-size: 1.5em;
+            color: var(--text-secondary);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.5s forwards;
+        }
 
-            .ai-message, .user-message {
-                font-size: 0.9em;
-                padding: 8px;
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 480px) {
-            .chat-header h1 {
-                font-size: 1em;
+        @media (max-width: 768px) {
+            body {
+                padding-top: env(safe-area-inset-top);
+                padding-bottom: env(safe-area-inset-bottom);
             }
 
-            #question {
-                font-size: 0.8em;
-                padding: 8px;
+            .chat-container {
+                height: calc(100vh - 40px);
+                margin-top: env(safe-area-inset-top);
+                margin-bottom: env(safe-area-inset-bottom);
             }
 
-            .holographic-btn {
-                font-size: 0.8em;
-                padding: 8px 12px;
+            .chat-messages {
+                max-height: calc(100vh - 200px);
+                overflow-y: auto;
             }
 
-            .ai-message, .user-message {
-                font-size: 0.8em;
-                padding: 6px;
+            .input-area {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 10px env(safe-area-inset-right) 10px env(safe-area-inset-left);
+                background: var(--bg-primary);
+                z-index: 100;
             }
         }
     </style>
 </head>
 <body>
+    <div id="welcomeFullScreen">
+        <div class="welcome-content">
+            <h1 class="welcome-title">AgriSeva</h1>
+            <p class="welcome-subtitle">Your AI Agricultural Assistant</p>
+        </div>
+    </div>
+
     <div class="chat-container">
         <div class="chat-header">
             <h1 id="agriSevaTitleClick">
                 <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M17 6H22L19 3L22 0H17V6ZM18 13C16.9 13 16 12.1 16 11C16 9.9 16.9 9 18 9C19.1 9 20 9.9 20 11C20 12.1 19.1 13 18 13ZM14 10C14 8.9 13.1 8 12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10ZM20 16C20 14.9 19.1 14 18 14C16.9 14 16 14.9 16 16C16 17.1 16.9 18 18 18C19.1 18 20 17.1 20 16ZM10 5V0H5L8 3L5 6H10V5ZM6 16C6 14.9 5.1 14 4 14C2.9 14 2 14.9 2 16C2 17.1 2.9 18 4 18C5.1 18 6 17.1 6 16ZM0 10C0 8.9 0.9 8 2 8C3.1 8 4 8.9 4 10C4 11.1 3.1 12 2 12C0.9 12 0 11.1 0 10ZM12.5 13.5C12.5 12 11.3 10.8 9.8 10.8H9.5C8 10.8 6.8 12 6.8 13.5V22L8.1 20.7C10.2 18.6 12.5 17.2 12.5 13.5Z"/>
                 </svg>
-                
                 AgriSeva
             </h1>
             <a href="feedback" class="logo">feedback</a>
@@ -266,6 +285,41 @@
     </div>
 
     <script>
+        // Auto-transition logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeScreen = document.getElementById('welcomeFullScreen');
+            
+            // Automatically hide welcome screen after 3 seconds
+            setTimeout(() => {
+                welcomeScreen.classList.add('hidden');
+                
+                // Remove welcome screen from DOM after transition
+                setTimeout(() => {
+                    welcomeScreen.remove();
+                }, 500);
+            }, 3000);
+        });
+
+        // Additional input event listener
+        document.getElementById('question').addEventListener('input', function() {
+            const welcomeScreen = document.getElementById('welcomeFullScreen');
+            if (welcomeScreen) {
+                welcomeScreen.classList.add('hidden');
+                
+                setTimeout(() => {
+                    welcomeScreen.remove();
+                }, 500);
+            }
+        });
+
+        // Title click event
+        document.getElementById('agriSevaTitleClick').addEventListener('click', function() {
+            const questionInput = document.getElementById('question');
+            questionInput.value = "Tell me about AgriSeva..??";
+            questionInput.focus();
+        });
+
+        // Send message functionality
         document.getElementById('submitBtn').addEventListener('click', sendMessage);
         document.getElementById('question').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
@@ -273,13 +327,7 @@
             }
         });
 
-        // Event listener for AgriSeva title click
-        document.getElementById('agriSevaTitleClick').addEventListener('click', function() {
-            const questionInput = document.getElementById('question');
-            questionInput.value = "Tell me about AgriSeva..??";
-            questionInput.focus();
-        });
-
+        // Send message async function
         async function sendMessage() {
             const questionInput = document.getElementById('question');
             const responseDiv = document.getElementById('response');
