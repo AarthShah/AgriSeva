@@ -248,9 +248,19 @@
                 bottom: 0;
                 left: 0;
                 right: 0;
-                padding: 10px env(safe-area-inset-right) 10px env(safe-area-inset-left);
+                padding: 16px env(safe-area-inset-right) 24px env(safe-area-inset-left); /* Increased bottom padding */
                 background: var(--bg-primary);
                 z-index: 100;
+                gap: 10px;
+            }
+
+            #question {
+                padding: 20px; /* Increased input padding */
+                font-size: 20px; /* Prevent auto-zoom on focus */
+            }
+
+            .holographic-btn {
+                padding: 16px 20px; /* Slightly more padding */
             }
         }
     </style>
@@ -271,7 +281,7 @@
                 </svg>
                 AgriSeva
             </h1>
-            <a href="feedback" class="logo">feedback</a>
+            <a href="feedback" class="logo">Feedback</a>
         </div>
         
         <div class="chat-messages" id="chatMessages">
