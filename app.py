@@ -17,7 +17,7 @@ subscription_key = "69h1lSNG0RNUp48aHD5u4aSJp1Z47IESya7oDsk9z3WggyQ6HPMEJQQJ99BA
 def index():
     return render_template('index.html') 
 
-@app.route('/feedback')
+@app.route('/feedback.html')
 def feedback():
     return render_template('feedback.html')
 
