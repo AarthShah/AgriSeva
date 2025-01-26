@@ -31,12 +31,13 @@
             min-height: 100vh;
             padding: 2vh;
             perspective: 1000px;
+            overflow: hidden; 
         }
 
         .chat-container {
             width: 100%;
             max-width: 1200px;
-            height: 96vh;
+            height: 100vh;
             background: var(--bg-secondary);
             border-radius: 24px;
             box-shadow: 0 30px 60px var(--shadow-color);
@@ -46,6 +47,7 @@
             flex-direction: column;
             transform-style: preserve-3d;
             transition: transform 0.5s;
+            overflow-y: auto;
         }
 
         .chat-container:hover {
@@ -106,6 +108,7 @@
             background: linear-gradient(to bottom, var(--bg-secondary), #1e293b);
             scrollbar-width: thin;
             scrollbar-color: var(--accent-primary) transparent;
+            height: calc(100vh - 120px);
         }
 
         .input-area {
@@ -119,10 +122,12 @@
         @media (max-width: 768px) {
     .chat-container {
         height: calc(100vh - 60px); /* Adjust for mobile keyboard */
+        padding-bottom: 5%;
     }
 
     .chat-messages {
-        height: calc(100vh - 140px); /* Adjust for mobile keyboard and input area */
+        height: calc(100vh - 140px); 
+        padding-bottom: 10%;/* Adjust for mobile keyboard and input area */
     }
 }
 
