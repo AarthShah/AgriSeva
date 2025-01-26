@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSeva</title>
+    <style>
+        :root {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a2634;
+            --accent-primary: #22c55e;
+            --accent-secondary: #4ade80;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #2c3e50;
+            --shadow-color: rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0a1128 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2vh;
+            perspective: 1000px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 96vh;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px var(--shadow-color);
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .chat-container:hover {
+            transform: rotateX(2deg) rotateY(-2deg) scale(1.01);
+        }
+
+        .chat-header {
+            background: linear-gradient(to right, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chat-header h1 {
+            font-size: 1.6em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            fill: var(--accent-primary);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .chat-header .logo {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--accent-primary);
+            background: rgba(34,197,94,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header .logo:hover {
+            background: rgba(34,197,94,0.2);
+            transform: scale(1.05);
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 25px;
+            background: linear-gradient(to bottom, var(--bg-secondary), #1e293b);
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) transparent;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 20px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -10px 30px var(--shadow-color);
+        }
+
+        #question {
+            flex-grow: 1;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 12px;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        #question:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.2);
+        }
+
+        .holographic-btn {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holographic-btn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(34,197,94,0.3);
+        }
+
+        .holographic-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                115deg, 
+                transparent 0%, 
+                rgba(255,255,255,0.2) 50%, 
+                transparent 100%
+            );
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .holographic-btn:hover::before {
+            opacity: 1;
+            animation: shine 0.7s ease-in-out;
+        }
+
+        .ai-message, .user-message {
+            max-width: 85%;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+            position: relative;
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .ai-message {
+            background: var(--bg-primary);
+            border-left: 4px solid var(--accent-primary);
+            margin-right: auto;
+            box-shadow: -5px 5px 15px var(--shadow-color);
+        }
+
+        .user-message {
+            text-align: right;
+            color: var(--text-primary);
+            margin-left: auto;
+            background: linear-gradient(to right, #6aef8b, #026331);  
+            box-shadow: 5px 5px 15px var(--shadow-color);
+        }
+
+        .ai-message:hover, .user-message:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1 id="agriSevaTitleClick">
+                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M17 6H22L19 3L22 0H17V6ZM18 13C16.9 13 16 12.1 16 11C16 9.9 16.9 9 18 9C19.1 9 20 9.9 20 11C20 12.1 19.1 13 18 13ZM14 10C14 8.9 13.1 8 12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10ZM20 16C20 14.9 19.1 14 18 14C16.9 14 16 14.9 16 16C16 17.1 16.9 18 18 18C19.1 18 20 17.1 20 16ZM10 5V0H5L8 3L5 6H10V5ZM6 16C6 14.9 5.1 14 4 14C2.9 14 2 14.9 2 16C2 17.1 2.9 18 4 18C5.1 18 6 17.1 6 16ZM0 10C0 8.9 0.9 8 2 8C3.1 8 4 8.9 4 10C4 11.1 3.1 12 2 12C0.9 12 0 11.1 0 10ZM12.5 13.5C12.5 12 11.3 10.8 9.8 10.8H9.5C8 10.8 6.8 12 6.8 13.5V22L8.1 20.7C10.2 18.6 12.5 17.2 12.5 13.5Z"/>
+                </svg>
+                
+                AgriSeva
+            </h1>
+            <a href="index.html" class="logo">feedback</a>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div id="response"></div>
+        </div>
+        
+        <div class="input-area">
+            <input type="text" id="question" name="question" placeholder="Ask your agricultural query..." required>
+            <button id="submitBtn" class="holographic-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', sendMessage);
+        document.getElementById('question').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Event listener for AgriSeva title click
+        document.getElementById('agriSevaTitleClick').addEventListener('click', function() {
+            const questionInput = document.getElementById('question');
+            questionInput.value = "Tell me about AgriSeva..??";
+            questionInput.focus();
+        });
+
+        async function sendMessage() {
+            const questionInput = document.getElementById('question');
+            const responseDiv = document.getElementById('response');
+            const chatMessages = document.getElementById('chatMessages');
+            const question = questionInput.value.trim();
+
+            if (!question) return;
+
+            responseDiv.innerHTML += `
+                <div class="user-message">${question}</div>
+            `;
+
+            responseDiv.innerHTML += `
+                <div style="color: var(--text-secondary); margin-bottom: 15px;">
+                    <strong>AgriSeva:</strong> <span id="typing">Analyzing field data...</span>
+                </div>
+            `;
+
+            questionInput.value = '';
+            questionInput.blur();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('http://localhost:5000/ask-bot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+                
+                const result = await response.text();
+                
+                document.getElementById('typing').closest('div').innerHTML = `
+                    <div class="ai-message">${result}</div>
+                `;
+
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                document.getElementById('typing').closest('div').innerHTML = `
+                    <div class="ai-message">Network disruption. Check connectivity.</div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

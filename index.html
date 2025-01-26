@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSeva - Feedback</title>
+    <style>
+        :root {
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a2634;
+            --accent-primary: #22c55e;
+            --accent-secondary: #4ade80;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --border-color: #2c3e50;
+            --shadow-color: rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #0a1128 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2vh;
+            perspective: 1000px;
+        }
+
+        .feedback-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--bg-secondary);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px var(--shadow-color);
+            padding: 30px;
+            border: 2px solid var(--border-color);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .feedback-container:hover {
+            transform: rotateX(2deg) rotateY(-2deg) scale(1.01);
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .feedback-header h1 {
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            fill: var(--accent-primary);
+        }
+
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.2);
+        }
+
+        .feedback-btn {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            align-self: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback-btn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(34,197,94,0.3);
+        }
+
+        .ai-response {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .ai-response.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-container">
+        <div class="feedback-header">
+            <h1>
+                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M17 6H22L19 3L22 0H17V6ZM18 13C16.9 13 16 12.1 16 11C16 9.9 16.9 9 18 9C19.1 9 20 9.9 20 11C20 12.1 19.1 13 18 13ZM14 10C14 8.9 13.1 8 12 8C10.9 8 10 8.9 10 10C10 11.1 10.9 12 12 12C13.1 12 14 11.1 14 10ZM20 16C20 14.9 19.1 14 18 14C16.9 14 16 14.9 16 16C16 17.1 16.9 18 18 18C19.1 18 20 17.1 20 16ZM10 5V0H5L8 3L5 6H10V5ZM6 16C6 14.9 5.1 14 4 14C2.9 14 2 14.9 2 16C2 17.1 2.9 18 4 18C5.1 18 6 17.1 6 16ZM0 10C0 8.9 0.9 8 2 8C3.1 8 4 8.9 4 10C4 11.1 3.1 12 2 12C0.9 12 0 11.1 0 10ZM12.5 13.5C12.5 12 11.3 10.8 9.8 10.8H9.5C8 10.8 6.8 12 6.8 13.5V22L8.1 20.7C10.2 18.6 12.5 17.2 12.5 13.5Z"/>
+                </svg>
+                AgriSeva Feedback
+            </h1>
+        </div>
+
+        <form class="feedback-form" id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="feedback">Your Feedback</label>
+                <textarea id="feedback" name="feedback" rows="5" placeholder="Share your thoughts about AgriSeva..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email (Optional)</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email for follow-up">
+            </div>
+
+            <button type="submit" class="feedback-btn">Submit Feedback</button>
+        </form>
+
+        <div id="aiResponse" class="ai-response"></div>
+    </div>
+
+    <script>
+        // Simple Sentiment Analysis Function
+        function analyzeSentiment(text) {
+            // Positive and negative word lists
+            const positiveWords = [
+                'good', 'great', 'excellent', 'amazing', 'awesome', 'fantastic', 
+                'wonderful', 'outstanding', 'helpful', 'love', 'best', 'perfect', 
+                'impressive', 'superb', 'exceptional' , 'not bad', 'not terrible',
+            ];
+            const negativeWords = [
+                'bad', 'terrible', 'awful', 'horrible', 'poor', 'worst', 'disappointing', 
+                'unhelpful', 'frustrating', 'useless', 'horrible', 'unacceptable', 
+                'problematic', 'inadequate', 'failed','disgusting','disgusted',
+                'not that good','not good','not great','not excellent','not amazing','not awesome',
+                'not fantastic','not wonderful','not outstanding','not helpful','not love','not best',
+                'not perfect','not impressive','not superb','not exceptional','not bad','not terrible',
+                'not awful','not horrible','not poor','not worst','not disappointing','not unhelpful',
+                'not frustrating','not useless','not horrible','not unacceptable','not problematic',
+                'not inadequate','not failed','not disgusting','not disgusted','bad','terrible','awful',
+            ];
+
+            // Convert text to lowercase for case-insensitive matching
+            const lowerText = text.toLowerCase();
+
+            // Count positive and negative words
+            const positiveCount = positiveWords.filter(word => lowerText.includes(word)).length;
+            const negativeCount = negativeWords.filter(word => lowerText.includes(word)).length;
+
+            // Determine sentiment
+            if (positiveCount > negativeCount) return 'positive';
+            if (negativeCount > positiveCount) return 'negative';
+            return 'neutral';
+        }
+
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const feedbackText = document.getElementById('feedback').value;
+            const aiResponseDiv = document.getElementById('aiResponse');
+
+            // Analyze sentiment
+            const sentimentResult = analyzeSentiment(feedbackText);
+
+            // Prepare response messages
+            let responseMessage = '';
+            if (sentimentResult === 'negative') {
+                // Negative feedback responses
+                const negativeResponses = [
+                    "We hear your concerns and are committed to improving our service.",
+                    "Thank you for your honest feedback. We're working on addressing your issues.",
+                    "Your insights are crucial for our continuous improvement.",
+                    "We apologize for not meeting your expectations and will take action.",
+                    "Your feedback helps us refine our agricultural support services."
+                ];
+                responseMessage = negativeResponses[Math.floor(Math.random() * negativeResponses.length)];
+            } else {
+                // Positive feedback responses
+                const positiveResponses = [
+                    "Thank you for your amazing feedback! We're thrilled to support your agricultural journey.",
+                    "Your positive support motivates our team to continue innovating.",
+                    "We're delighted you're having a great experience with AgriSeva!",
+                    "Your kind words mean a lot to our team.",
+                    "Thank you for being an incredible AgriSeva user!"
+                ];
+                responseMessage = positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
+            }
+
+            // Display AI response
+            aiResponseDiv.textContent = responseMessage;
+            aiResponseDiv.classList.add('show');
+
+            // Reset form after a short delay
+            setTimeout(() => {
+                this.reset();
+                aiResponseDiv.classList.remove('show');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
