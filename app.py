@@ -19,7 +19,7 @@ def index():
 
 @app.route('/feedback')
 def feedback():
-    return render_template('Feedback.html')
+    return render_template('feedback.html')
 
 @app.route('/ask-bot', methods=['POST'])
 def ask_bot():
