@@ -243,28 +243,25 @@
                 overflow-y: auto;
             }
 
-            .input-area {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 25px env(safe-area-inset-right) 24px env(safe-area-inset-left); /* Increased bottom padding */
-                background: var(--bg-primary);
-                z-index: 100;
-                gap: 10px;
-            }
+            @media (max-width: 768px) {
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            padding: 20px env(safe-area-inset-right) 28px env(safe-area-inset-left);
+            gap: 14px;
+        }
 
-            #question {
-                width: 100%;
-                padding: 20px; /* Increased input padding */
-                font-size: 17px; /* Prevent auto-zoom on focus */
-            }
+        #question {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+        }
 
-            .holographic-btn {
-                width: 20%;
-                padding: 16px 20px;
-                 /* Slightly more padding */
-            }
+        .holographic-btn {
+            width: 100%;
+            padding: 16px 20px;
+        }
+    }
         }
     </style>
 </head>
