@@ -5,7 +5,7 @@ from azure.core.credentials import AzureKeyCredential
 app = Flask(__name__, template_folder='.')
 
 # Azure Text Analytics credentials
-language_key = 'EhrvRaDEqtQpb39URQsEFpsTUwlkK2HODcsvYYKRooEKKnDxOzghJQQJ99BAAC1i4TkXJ3w3AAAaACOGm4nE'
+language_key 
 language_endpoint = 'https://aagrisevaproject.cognitiveservices.azure.com/'
 
 # Authenticate Azure Text Analytics client
