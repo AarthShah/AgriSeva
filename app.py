@@ -10,7 +10,7 @@ CORS(app)
 
 # Azure service configuration
 azure_endpoint = "https://chatbotruby.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=Ruby&api-version=2021-10-01&deploymentName=production"
-subscription_key = "69h1lSNG0RNUp48aHD5u4aSJp1Z47IESya7oDsk9z3WggyQ6HPMEJQQJ99BAACHYHv6XJ3w3AAAaACOGkXLC"
+subscription_key 
 
 # Route to serve the HTML file
 @app.route('/')
